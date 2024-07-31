@@ -40,12 +40,3 @@ This is a simple inventory management system that allows users to add, update, d
 2. Open your web browser and visit `http://localhost:3000`.
 
 3. Use the provided interface to manage the inventory.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-# Inventory-Management-System
