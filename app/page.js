@@ -122,43 +122,46 @@ export default function Home() {
           </Stack>
         </Box>
       </Modal>
-      <Button
-        variant="contained"
-        onClick={() => {
-          handleOpen();
-        }}
-      >
-        Add New Item
-      </Button>
-      <Box border={"1px solid #333"}>
+      <Box>
         <Box
-          width={"800px"}
+          width={"100%"}
           height={"100px"}
-          bgcolor="#ADD8E6"
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
+          id="title-container"
         >
-          <Typography variant="h2" color={"#333"}>
-            Inventory Items
+          <Typography variant="h2" color={"#333"} id="title-header">
+            Inventory Management
           </Typography>
         </Box>
-        <Stack width="800px" height={"300px"} spacing={2} overflow={"auto"}>
+        <Stack
+          border={"1px solid #333"}
+          width="800px"
+          height={"300px"}
+          overflow={"auto"}
+        >
           {inventory.map(({ name, quantity }) => (
             <Box
               key={name}
               width={"100%"}
-              minHeight={"150px"}
+              minHeight={"50px"}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"space-between"}
-              bgcolor={"#f0f0f0"}
               padding={5}
+              border={"1px solid #333"}
+              className="inventory-item"
             >
-              <Typography variant="h3" color="#333" textAlign={"center"}>
+              <Typography
+                variant="p"
+                color="#333"
+                id={name.charAt(0).toUpperCase() + name.slice(1)}
+                textAlign={"center"}
+              >
                 {name.charAt(0).toUpperCase() + name.slice(1)}
               </Typography>
-              <Typography variant="h3" color="#333" textAlign={"center"}>
+              <Typography variant="p" color="#333" textAlign={"center"}>
                 {quantity}
               </Typography>
               <Stack direction={"row"} spacing={2}>
@@ -183,6 +186,14 @@ export default function Home() {
           ))}
         </Stack>
       </Box>
+      <Button
+        variant="contained"
+        onClick={() => {
+          handleOpen();
+        }}
+      >
+        Add New Item
+      </Button>
     </Box>
   );
 }
