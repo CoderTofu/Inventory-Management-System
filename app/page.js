@@ -27,6 +27,7 @@ import {
 } from "firebase/firestore";
 
 export default function Home() {
+  const [filter, setFiltered] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [open, setOpen] = useState(false);
   const [itemName, setItemName] = useState("");
@@ -42,6 +43,7 @@ export default function Home() {
       });
     });
     setInventory(inventoryList);
+    setFiltered(inventoryList)
   };
 
   const addItem = async (item) => {
@@ -70,6 +72,16 @@ export default function Home() {
       }
     }
     await updateInventory();
+  };
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredInventory = inventory.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+
+    setFiltered(filteredInventory);
+    console.log(searchTerm, filteredInventory);
   };
 
   useEffect(() => {
@@ -135,15 +147,17 @@ export default function Home() {
           height={"100px"}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"center"}
+          justifyContent={"space-between"}
           id="title-container"
         >
-          <Typography variant="h2" color={"#333"} id="title-header">
+          <Typography variant="h3" color={"#333"} id="title-header">
             Inventory Management
           </Typography>
+          <TextField sx={{marginLeft: 10}} id="standard-basic" label="Search..." variant="standard" onChange={handleSearch} />
         </Box>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Box height="300px" overflow="auto">
+        <TableContainer component={Paper} height="300px" overflow="auto" >
+          <Table sx={{ minWidth: 650}} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
@@ -152,7 +166,7 @@ export default function Home() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventory.map(({ name, quantity }) => (
+              {filter.map(({ name, quantity }) => (
                 <TableRow
                   key={name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -189,6 +203,7 @@ export default function Home() {
             </TableBody>
           </Table>
         </TableContainer>
+        </Box>
       </Box>
       <Button
         variant="contained"
