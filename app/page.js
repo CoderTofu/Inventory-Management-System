@@ -160,9 +160,9 @@ export default function Home() {
           <Table sx={{ minWidth: 650}} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="center">Quantity</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell className="table-header">Name</TableCell>
+                <TableCell className="table-header" align="center">Quantity</TableCell>
+                <TableCell className="table-header" align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
