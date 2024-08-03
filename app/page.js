@@ -7,6 +7,13 @@ import {
   Stack,
   TextField,
   Button,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  TableHead,
+  Paper,
 } from "@mui/material";
 import { firestore } from "@/firebase";
 import {
@@ -135,56 +142,53 @@ export default function Home() {
             Inventory Management
           </Typography>
         </Box>
-        <Stack
-          border={"1px solid #333"}
-          width="800px"
-          height={"300px"}
-          overflow={"auto"}
-        >
-          {inventory.map(({ name, quantity }) => (
-            <Box
-              key={name}
-              width={"100%"}
-              minHeight={"50px"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              padding={5}
-              border={"1px solid #333"}
-              className="inventory-item"
-            >
-              <Typography
-                variant="p"
-                color="#333"
-                id={name.charAt(0).toUpperCase() + name.slice(1)}
-                textAlign={"center"}
-              >
-                {name.charAt(0).toUpperCase() + name.slice(1)}
-              </Typography>
-              <Typography variant="p" color="#333" textAlign={"center"}>
-                {quantity}
-              </Typography>
-              <Stack direction={"row"} spacing={2}>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    addItem(name);
-                  }}
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Quantity</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {inventory.map(({ name, quantity }) => (
+                <TableRow
+                  key={name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  Add
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    removeItem(name);
-                  }}
-                >
-                  Remove
-                </Button>
-              </Stack>
-            </Box>
-          ))}
-        </Stack>
+                  <TableCell component="th" scope="row">
+                    {name}
+                  </TableCell>
+                  <TableCell align="center">{quantity}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="small"
+                      onClick={() => {
+                        addItem(name);
+                      }}
+                    >
+                      +
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      sx={{ marginLeft: 1}}
+                      onClick={() => {
+                        removeItem(name);
+                      }}
+                    >
+                      -
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
       <Button
         variant="contained"
