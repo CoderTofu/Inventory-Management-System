@@ -147,8 +147,8 @@ export default function Home() {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell align="center">Quantity</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
