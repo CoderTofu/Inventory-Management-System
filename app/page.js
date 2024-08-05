@@ -27,6 +27,7 @@ import {
 } from "firebase/firestore";
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFiltered] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [open, setOpen] = useState(false);
@@ -43,7 +44,9 @@ export default function Home() {
       });
     });
     setInventory(inventoryList);
-    setFiltered(inventoryList)
+    setFiltered(inventoryList.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ));
   };
 
   const addItem = async (item) => {
@@ -74,19 +77,21 @@ export default function Home() {
     await updateInventory();
   };
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
+  const handleSearch = () => {
     const filteredInventory = inventory.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm)
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     setFiltered(filteredInventory);
-    console.log(searchTerm, filteredInventory);
   };
 
   useEffect(() => {
     updateInventory();
   }, []);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchTerm]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -153,7 +158,9 @@ export default function Home() {
           <Typography variant="h3" color={"#333"} id="title-header">
             Inventory Management
           </Typography>
-          <TextField sx={{marginLeft: 10}} id="standard-basic" label="Search..." variant="standard" onChange={handleSearch} />
+          <TextField sx={{marginLeft: 10}} id="standard-basic" label="Search..." variant="standard" value={searchTerm} onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }} />
         </Box>
         <Box height="300px" overflow="auto">
         <TableContainer component={Paper} height="300px" overflow="auto" >
